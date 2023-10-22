@@ -28,7 +28,7 @@ def calculate_cosine_similarity(text_chunk, embeddings_df):
     for index, row in embeddings_df.iterrows():
         A = row.embeddings_array
         B = sentence_embedding
-
+        A=A[:-1]
         # calculate the cosine similarity
         cosine = np.dot(A,B)/(norm(A)*norm(B))
 
@@ -52,12 +52,6 @@ def calculate_cosine_similarity(text_chunk, embeddings_df):
 embeddings_df = pd.read_csv('./embeddings_df1.csv')
 # test query sentence
 text_chunk = "Lilies are white."
-
-embeddings_df['embeddings_array'] = embeddings_df.apply(lambda row: row.values[:-1], axis=1)
-sentence_embedding = _get_embeddings(text_chunk)
-for index, row in embeddings_df.iterrows():
-        print(row.embeddings_array)
-        print(sentence_embedding)
 
 # calculate cosine similarity
 embeddings_cosine_df = calculate_cosine_similarity(text_chunk, embeddings_df)
